@@ -3,14 +3,17 @@ var desktioMenu = document.querySelector(".desktop-menu");
 var menubtn = document.querySelector(".menu");
 var mobile = document.querySelector(".mobile-menu");
 var carrito = document.querySelector(".navbar-shopping-cart");
-var detail = document.querySelector(".product-detail");
+var detail = document.getElementById("shoppingCartContainer");
 var cardContainer = document.querySelector(".cards-container");
+var producDetails = document.querySelector(".productDetailss");
+var producDetailsClose = document.querySelector(".product-detail-close");
 email.addEventListener("click", () => {
   /*   const detailClosed = detail.classList.contains("inactive");
   if (!detailClosed) {
     //Si no esta cerrado
     detail.classList.add("inactive");
   } */
+  producDetails.classList.add("inactive");
   detail.classList.add("inactive");
   desktioMenu.classList.toggle("inactive"); // lo que hacemos es ejecutar la funcion para quitar o poner la clase inactive con el toggle
 
@@ -25,12 +28,18 @@ email.addEventListener("click", () => {
 
 menubtn.addEventListener("click", () => {
   detail.classList.add("inactive");
+  producDetails.classList.add("inactive");
   mobile.classList.toggle("inactive");
 });
 carrito.addEventListener("click", () => {
   desktioMenu.classList.add("inactive");
   mobile.classList.add("inactive");
+  producDetails.classList.add("inactive");
   detail.classList.toggle("inactive");
+});
+
+producDetailsClose.addEventListener("click", () => {
+  producDetails.classList.add("inactive");
 });
 var product = [];
 product.push({
@@ -48,42 +57,44 @@ product.push({
 product.push({
   name: "Bike",
   precio: 120,
-  image:
-    "https://cdn.pixabay.com/photo/2018/07/31/22/08/lion-3576045__480.jpg",
+  image: "https://cdn.pixabay.com/photo/2018/07/31/22/08/lion-3576045__480.jpg",
 });
 
-function renderProducts(arr){
-  for (productList of product) {
-    /*   const productCard = document.createElement("div");
-      productCard.classList.add("product-card");
-      const img = document.createElement("img");
-      img.setAttribute("src", product.image);
-      const productInfo = document.createElement("div");
-      productInfo.classList.add("product-info");
+function renderProducts(arr) {
+  for (productList of arr) {
+    function abrir() {
+      producDetails.classList.remove("inactive");
+      desktioMenu.classList.add("inactive");
+      mobile.classList.add("inactive");
+      detail.classList.add("inactive");
+    }
+    /* const productCard = document.createElement("div");
+    productCard.classList.add("product-card");
+    const img = document.createElement("img");
+    img.setAttribute("src", productList.image);
     
-      const productInfoDiv = document.createElement("div");
-      const productPrice = document.createElement("p");
-      productPrice.innerText = "$" + product.precio;
-      const productName = document.createElement("p");
-      productName.innerText = product.name;
-      productInfoDiv.appendChild(productPrice);
-      productInfoDiv.appendChild(productName);
-      const productFig = document.createElement("figure");
-      const producImgCard = document.createElement("img");
-      producImgCard.setAttribute("src", "./icons/bt_add_to_cart.svg");
-    
-      productFig.appendChild(producImgCard);
-    
-      productInfo.appendChild(productInfoDiv);
-      productInfo.appendChild(productFig);
-    
-      productCard.appendChild(img);
-      productCard.appendChild(productInfo);
-    
-      cardContainer.appendChild(productCard); */
-      
-      const htmlCards = ` <div class="product-card">
-      <img src=${productList.image} >
+    const productInfo = document.createElement("div");
+    productInfo.classList.add("product-info");
+    const productInfoDiv = document.createElement("div");
+    const productPrice = document.createElement("p");
+    productPrice.innerText = "$" + productList.precio;
+    const productName = document.createElement("p");
+    productName.innerText = productList.name;
+    productInfoDiv.appendChild(productPrice);
+    productInfoDiv.appendChild(productName);
+    const productFig = document.createElement("figure");
+    const producImgCard = document.createElement("img");
+    producImgCard.setAttribute("src", "./icons/bt_add_to_cart.svg");
+    productFig.appendChild(producImgCard);
+    productInfo.appendChild(productInfoDiv);
+    productInfo.appendChild(productFig);
+    productCard.appendChild(img);
+    productCard.appendChild(productInfo);
+
+    cardContainer.appendChild(productCard); */
+
+    const htmlCards = ` <div class="product-card">
+      <img src=${productList.image} class="imagensita" id="img">
       <div class="product-info">
         <div>
           <p>$${productList.precio}</p>
@@ -93,10 +104,11 @@ function renderProducts(arr){
           <img src="./icons/bt_add_to_cart.svg" alt="">
         </figure>
       </div>
-    </div>`
-     cardContainer.innerHTML += htmlCards// esto es igual a  cardContainer.innerHTML = cardContainer.innerHTML +  htmlCards
-     // lo que hace el operador += es simplificar para no repetir lo que está antes del igual
-    }
-    
+    </div>`;
+    cardContainer.innerHTML += htmlCards; // esto es igual a  cardContainer.innerHTML = cardContainer.innerHTML +  htmlCards
+    // lo que hace el operador += es simplificar para no repetir lo que está antes del igual
+    var img = document.getElementById("img");
+    img.addEventListener("click", abrir);
+  }
 }
-renderProducts(product)
+renderProducts(product);
